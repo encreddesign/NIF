@@ -2,6 +2,8 @@ package nif.encreddesign.nif.encreddesign.service;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
@@ -15,7 +17,7 @@ public class NIFExecutorService {
     public static final String LOG_TAG = "Log_A";
 
     // Thread pool size and recycle time
-    public static int eThreadPoolSize = 1;
+    public static int eThreadPoolSize = 5;
     public static int eThreadRecycleTime = 10;
 
     private ScheduledCallback sCallback;
@@ -37,20 +39,39 @@ public class NIFExecutorService {
     }
 
     /*
+    * @method setThreadPoolSize
+    * */
+    public void setThreadPoolSize ( int size ) {
+
+        this.eThreadPoolSize = size;
+
+    }
+
+    /*
     * @method runSchedule
     * */
-    public void runSchedule ( final ScheduleListener sListener ) {
+    public void runSchedule ( final ArrayList<ScheduleListener> sListener ) {
 
-        this.sCallback = new ScheduledCallback(sListener);
-        try {
+        if( sListener.size() > 0 ) {
 
-            this.eSchedule.scheduleAtFixedRate( this.sCallback, eThreadRecycleTime, eThreadRecycleTime, TimeUnit.SECONDS );
+            for(ScheduleListener sl : sListener) {
 
-        } catch (RejectedExecutionException ex) {
+                this.sCallback = new ScheduledCallback(sl);
+                try {
 
-            // best to catch exception and tell user whats going on, instead of crashing app
-            Log.e( LOG_TAG, ex.getMessage() );
+                    this.eSchedule.scheduleAtFixedRate( this.sCallback, eThreadRecycleTime, eThreadRecycleTime, TimeUnit.SECONDS );
 
+                } catch (RejectedExecutionException ex) {
+
+                    // best to catch exception and tell user whats going on, instead of crashing app
+                    Log.e( LOG_TAG, ex.getMessage() );
+
+                }
+
+            }
+
+        } else {
+            throw new EmptyStackException();
         }
 
     }
