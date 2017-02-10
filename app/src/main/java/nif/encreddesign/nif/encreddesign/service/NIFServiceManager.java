@@ -75,7 +75,7 @@ public class NIFServiceManager {
 
         try {
 
-            LightData.setLightDataArray("taskType", this.tNames);
+            LightData.setLightDataArray( Utils.TASK_TYPE, this.tNames );
             if( !this.isServiceRunning() ) {
 
                 this.mContext.startService(this.mIntent);
