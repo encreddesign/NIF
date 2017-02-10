@@ -12,6 +12,7 @@ import nif.encreddesign.nif.encreddesign.service.NIFExecutorService;
 import nif.encreddesign.nif.encreddesign.service.ScheduleListener;
 import nif.encreddesign.tasks.TaskRegistered;
 import nif.encreddesign.tasks.TaskTypes;
+import nif.encreddesign.utils.LightData;
 import nif.encreddesign.utils.Uid;
 import nif.encreddesign.utils.Utils;
 
@@ -32,6 +33,8 @@ public class NIFService extends Service {
         this.tRegistered = new TaskRegistered();
         this.tTypes = new TaskTypes();
 
+        LightData.init( this );
+
     }
 
     @Override
@@ -40,10 +43,11 @@ public class NIFService extends Service {
         String dId = Uid.gen();
         Log.d( Utils.LOG_TAG, "Started NIF service: " + dId );
 
-        // add the wanted tasks
-        if( intent != null ) {
+        final ArrayList<String> tasks = LightData.getLightDataArray( Utils.TASK_TYPE );
 
-            final ArrayList<String> tasks = intent.getStringArrayListExtra( Utils.TASK_TYPE );
+        // add the wanted tasks
+        if( tasks.size() > 0 ) {
+
             try {
 
                 if( tasks.size() <= 0 ) throw new EmptyStackException();
@@ -66,7 +70,7 @@ public class NIFService extends Service {
 
             try {
 
-                // Start the schedule serivce
+                // Start the schedule service
                 this.nExecutorService.runSchedule( this.tTypes.getTaskTypes() );
 
             } catch (EmptyStackException ex) {
