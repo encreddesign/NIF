@@ -9,6 +9,8 @@ import nif.encreddesign.nif.encreddesign.service.ScheduleListener;
  */
 public class TaskTypes {
 
+    protected TaskIRegistered tIRegistered;
+
     // list of tasks
     private ArrayList<ScheduleListener> localList;
 
@@ -24,9 +26,14 @@ public class TaskTypes {
     /*
     * @method addTaskType
     * */
-    public void addTaskType ( final ScheduleListener sListener ) {
+    public void addTaskType ( final ScheduleListener sListener, final TaskIRegistered tRegistered ) {
 
         this.localList.add( sListener );
+        this.tIRegistered = tRegistered;
+
+        // trigger needed callbacks
+        final String cTaskName = sListener.getClass().getSimpleName();
+        this.tIRegistered.onRegistered( cTaskName );
 
     }
 

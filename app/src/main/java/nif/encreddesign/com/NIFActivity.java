@@ -4,16 +4,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import nif.encreddesign.nif.encreddesign.service.NIFServiceManager;
+import nif.encreddesign.tasks.TaskAjax;
+
 public class NIFActivity extends Activity {
 
-    protected Intent sIntent;
+    protected NIFServiceManager nServiceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.sIntent = new Intent(this, NIFService.class);
-        this.startService(sIntent);
+        this.nServiceManager = new NIFServiceManager(this, NIFService.class);
+
+        // handle adding tasks from UI
+        this.nServiceManager.addSpecTask( "TaskAjax" );
+        this.nServiceManager.start();
 
     }
 

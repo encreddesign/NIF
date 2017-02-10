@@ -5,23 +5,23 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.EmptyStackException;
 
-import nif.encreddesign.ajax.AjaxUpdate;
 import nif.encreddesign.nif.encreddesign.service.NIFExecutorService;
-import nif.encreddesign.tasks.TaskAjax;
+import nif.encreddesign.nif.encreddesign.service.ScheduleListener;
+import nif.encreddesign.tasks.TaskRegistered;
 import nif.encreddesign.tasks.TaskTypes;
 import nif.encreddesign.utils.Uid;
+import nif.encreddesign.utils.Utils;
 
 /**
  * Created by Joshua on 08/02/17.
  */
 public class NIFService extends Service {
 
-    // Helpful constants
-    public static final String LOG_TAG = "Log_A";
-
     protected TaskTypes tTypes;
+    protected TaskRegistered tRegistered;
     protected NIFExecutorService nExecutorService;
 
     @Override
@@ -29,6 +29,7 @@ public class NIFService extends Service {
         super.onCreate();
 
         this.nExecutorService = new NIFExecutorService();
+        this.tRegistered = new TaskRegistered();
         this.tTypes = new TaskTypes();
 
     }
@@ -37,10 +38,27 @@ public class NIFService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         String dId = Uid.gen();
-        Log.d( LOG_TAG, "Started NIF service: " + dId );
+        Log.d( Utils.LOG_TAG, "Started NIF service: " + dId );
 
         // add the wanted tasks
-        this.tTypes.addTaskType( new TaskAjax() );
+        if( intent != null ) {
+
+            final ArrayList<String> tasks = intent.getStringArrayListExtra( Utils.TASK_TYPE );
+            try {
+
+                if( tasks.size() <= 0 ) throw new EmptyStackException();
+                for(String task : tasks) {
+
+                    final ScheduleListener listener = (ScheduleListener) Utils.getClassByName(task, Utils.PACKAGE_TASKS);
+                    this.tTypes.addTaskType( listener, this.tRegistered );
+
+                }
+
+            } catch (EmptyStackException ex) {
+                Log.e( Utils.LOG_TAG, ("Empty tasks - " + ex.getMessage()), ex );
+            }
+
+        }
 
         if( this.tTypes.getTaskSize() > 0 ) {
 
@@ -52,7 +70,7 @@ public class NIFService extends Service {
                 this.nExecutorService.runSchedule( this.tTypes.getTaskTypes() );
 
             } catch (EmptyStackException ex) {
-                Log.e( LOG_TAG, ex.getMessage() );
+                Log.e( Utils.LOG_TAG, ex.getMessage(), ex );
             }
 
         }

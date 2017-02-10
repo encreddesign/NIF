@@ -9,12 +9,12 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import nif.encreddesign.utils.Utils;
+
 /**
  * Created by Joshua on 08/02/17.
  */
 public class NIFExecutorService {
-
-    public static final String LOG_TAG = "Log_A";
 
     // Thread pool size and recycle time
     public static int eThreadPoolSize = 5;
@@ -39,15 +39,6 @@ public class NIFExecutorService {
     }
 
     /*
-    * @method setThreadPoolSize
-    * */
-    public void setThreadPoolSize ( int size ) {
-
-        this.eThreadPoolSize = size;
-
-    }
-
-    /*
     * @method runSchedule
     * */
     public void runSchedule ( final ArrayList<ScheduleListener> sListener ) {
@@ -64,7 +55,7 @@ public class NIFExecutorService {
                 } catch (RejectedExecutionException ex) {
 
                     // best to catch exception and tell user whats going on, instead of crashing app
-                    Log.e( LOG_TAG, ex.getMessage() );
+                    Log.e( Utils.LOG_TAG, ex.getMessage(), ex );
 
                 }
 
@@ -73,6 +64,15 @@ public class NIFExecutorService {
         } else {
             throw new EmptyStackException();
         }
+
+    }
+
+    /*
+    * @method setThreadPoolSize
+    * */
+    public void setThreadPoolSize ( int size ) {
+
+        this.eThreadPoolSize = size;
 
     }
 
