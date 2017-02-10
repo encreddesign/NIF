@@ -19,6 +19,7 @@ public class NIFActivity extends Activity {
 
         // handle adding tasks from UI
         this.nServiceManager.addSpecTask( "TaskAjax" );
+        this.nServiceManager.addSpecTask( "TaskSMS" );
         this.nServiceManager.start();
 
     }

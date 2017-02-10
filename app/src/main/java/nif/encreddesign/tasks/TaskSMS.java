@@ -10,17 +10,23 @@ import nif.encreddesign.utils.Utils;
  */
 public class TaskSMS implements ScheduleListener {
 
+    private String cTaskName = null;
+
     /*
     * @method constructor - AjaxUpdate
     * */
-    public TaskSMS () {}
+    public TaskSMS () {
+
+        this.cTaskName = this.getClass().getName();
+
+    }
 
     @Override
     public void scheduledUpdate( String sData, String sUid ) {
 
         // update has been called, do needed with data
 
-        Log.d(Utils.LOG_TAG, (sUid + ": " + sData));
+        Log.d(Utils.LOG_TAG, ("[" + this.cTaskName + "-" + sUid + "]: " + sData));
 
     }
 
