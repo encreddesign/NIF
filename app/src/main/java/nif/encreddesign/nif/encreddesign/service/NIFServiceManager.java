@@ -51,6 +51,9 @@ public class NIFServiceManager {
 
     }
 
+    /*
+    * @method isServiceRunning
+    * */
     private boolean isServiceRunning () {
 
         ActivityManager activityManager = (ActivityManager) this.mContext.getSystemService(Context.ACTIVITY_SERVICE);
