@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import nif.encreddesign.nif.encreddesign.service.NIFServiceManager;
+import nif.encreddesign.utils.Json;
 
 /**
  * Created by Joshua on 11/02/17.
@@ -29,12 +30,18 @@ public class Process {
     /*
     * @method addAllProcesses
     * */
-    public void addAllProcesses () {}
+    public void addAllProcesses () {
+
+        this.getJsonHashMap();
+
+    }
 
     /*
     * @method getJsonHashMap
     * */
     protected HashMap<String, String> getJsonHashMap () {
+
+        Json.getAsArray( this.jsonString );
 
         return null;
 

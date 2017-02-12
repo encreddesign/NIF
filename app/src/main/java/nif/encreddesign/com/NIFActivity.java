@@ -1,14 +1,14 @@
 package nif.encreddesign.com;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import nif.encreddesign.nif.encreddesign.service.NIFServiceManager;
-import nif.encreddesign.tasks.TaskAjax;
+import nif.encreddesign.processes.Process;
 
 public class NIFActivity extends Activity {
 
+    protected Process process;
     protected NIFServiceManager nServiceManager;
 
     @Override
@@ -17,10 +17,13 @@ public class NIFActivity extends Activity {
 
         this.nServiceManager = new NIFServiceManager(this, NIFService.class);
 
+        process = new Process( "[{\"name\":\"Wifi\"},{\"name\":\"Bluetooth\"}]", this.nServiceManager );
+        process.addAllProcesses();
+
         // handle adding tasks from UI
         this.nServiceManager.addSpecTask( "TaskAjax" );
         this.nServiceManager.addSpecTask( "TaskSMS" );
-        this.nServiceManager.start();
+        //this.nServiceManager.start();
 
     }
 
