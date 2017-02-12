@@ -1,6 +1,6 @@
 package nif.encreddesign.processes;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Joshua on 11/02/17.
@@ -16,14 +16,15 @@ public class ProcessObject {
 
     private String pCarry;
 
-    protected ArrayList<String> pDataHolder;
-
     /*
     * @method constructor
     * */
     public ProcessObject () {
 
-        this.pDataHolder = new ArrayList<String>();
+        this.pName = null;
+        this.pDescription = null;
+        this.pTask = null;
+        this.pCarry = null;
 
     }
 
@@ -102,7 +103,14 @@ public class ProcessObject {
     /*
     * @method setProcessData
     * */
-    public void setProcessData ( ArrayList<String> data ) {}
+    public void setProcessData ( HashMap<String, String> data ) {
+
+        if( data.get("name") != null ) this.pName = data.get("name");
+        if( data.get("description") != null ) this.pDescription = data.get("description");
+        if( data.get("task") != null ) this.pTask = data.get("task");
+        if( data.get("carry") != null ) this.pCarry = data.get("carry");
+
+    }
 
     /*
     * @method getProcessObject
