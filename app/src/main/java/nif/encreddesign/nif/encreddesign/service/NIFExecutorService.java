@@ -9,6 +9,7 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import nif.encreddesign.tasks.carry.ICarry;
 import nif.encreddesign.utils.Utils;
 
 /**
@@ -41,13 +42,13 @@ public class NIFExecutorService {
     /*
     * @method runSchedule
     * */
-    public void runSchedule ( final ArrayList<ScheduleListener> sListener ) {
+    public void runSchedule ( final ArrayList<ScheduleListener> sListener, final ArrayList<ICarry> iCarry ) {
 
         if( sListener.size() > 0 ) {
 
-            for(ScheduleListener sl : sListener) {
+            for(int i = 0; i < sListener.size(); i++) {
 
-                this.sCallback = new ScheduledCallback(sl);
+                this.sCallback = new ScheduledCallback( sListener.get(i), iCarry.get(i) );
                 try {
 
                     this.eSchedule.scheduleAtFixedRate( this.sCallback, eThreadRecycleTime, eThreadRecycleTime, TimeUnit.SECONDS );

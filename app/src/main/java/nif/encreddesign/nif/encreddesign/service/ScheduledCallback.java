@@ -1,5 +1,6 @@
 package nif.encreddesign.nif.encreddesign.service;
 
+import nif.encreddesign.tasks.carry.ICarry;
 import nif.encreddesign.utils.Uid;
 
 /**
@@ -7,14 +8,16 @@ import nif.encreddesign.utils.Uid;
  */
 public class ScheduledCallback implements Runnable {
 
+    protected ICarry iCarry;
     protected ScheduleListener sListener;
 
     /*
     * @method constructor - AjaxUpdate
     * */
-    public ScheduledCallback ( ScheduleListener sListener ) {
+    public ScheduledCallback ( ScheduleListener sListener, ICarry iCarry ) {
 
         this.sListener = sListener;
+        this.iCarry = iCarry;
 
     }
 

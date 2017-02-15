@@ -3,6 +3,7 @@ package nif.encreddesign.tasks;
 import java.util.ArrayList;
 
 import nif.encreddesign.nif.encreddesign.service.ScheduleListener;
+import nif.encreddesign.tasks.carry.ICarry;
 
 /**
  * Created by Joshua on 09/02/17.
@@ -12,6 +13,7 @@ public class TaskTypes {
     protected TaskIRegistered tIRegistered;
 
     // list of tasks
+    private ArrayList<ICarry> carryList;
     private ArrayList<ScheduleListener> localList;
 
     /*
@@ -38,11 +40,29 @@ public class TaskTypes {
     }
 
     /*
-    * @method addTaskType
+    * @method addCarryType
+    * */
+    public void addCarryType ( final ICarry iCarry ) {
+
+        this.carryList.add( iCarry );
+
+    }
+
+    /*
+    * @method getTaskSize
     * */
     public int getTaskSize () {
 
         return this.localList.size();
+
+    }
+
+    /*
+    * @method getCarryType
+    * */
+    public int getCarryType () {
+
+        return this.carryList.size();
 
     }
 
@@ -52,6 +72,15 @@ public class TaskTypes {
     public ArrayList<ScheduleListener> getTaskTypes () {
 
         return this.localList;
+
+    }
+
+    /*
+    * @method getCarryTypes
+    * */
+    public ArrayList<ICarry> getCarryTypes () {
+
+        return this.carryList;
 
     }
 

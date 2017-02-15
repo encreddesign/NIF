@@ -12,6 +12,7 @@ import nif.encreddesign.nif.encreddesign.service.NIFExecutorService;
 import nif.encreddesign.nif.encreddesign.service.ScheduleListener;
 import nif.encreddesign.tasks.TaskRegistered;
 import nif.encreddesign.tasks.TaskTypes;
+import nif.encreddesign.tasks.carry.ICarry;
 import nif.encreddesign.utils.LightData;
 import nif.encreddesign.utils.Uid;
 import nif.encreddesign.utils.Utils;
@@ -53,8 +54,14 @@ public class NIFService extends Service {
                 if( tasks.size() <= 0 ) throw new EmptyStackException();
                 for(String task : tasks) {
 
-                    final ScheduleListener listener = (ScheduleListener) Utils.getClassByName(task, Utils.PACKAGE_TASKS);
+                    String taskT = task.split(":")[0];
+                    String carryT = task.split(":")[1];
+
+                    final ScheduleListener listener = (ScheduleListener) Utils.getClassByName(taskT, Utils.PACKAGE_TASKS);
+                    final ICarry carry = (ICarry) Utils.getClassByName(carryT, Utils.PACKAGE_TASKS_CARRY);
+
                     this.tTypes.addTaskType( listener, this.tRegistered );
+                    this.tTypes.addCarryType( carry );
 
                 }
 
@@ -71,7 +78,7 @@ public class NIFService extends Service {
             try {
 
                 // Start the schedule service
-                this.nExecutorService.runSchedule( this.tTypes.getTaskTypes() );
+                this.nExecutorService.runSchedule( this.tTypes.getTaskTypes(), this.tTypes.getCarryTypes() );
 
             } catch (EmptyStackException ex) {
                 Log.e( Utils.LOG_TAG, ex.getMessage(), ex );
