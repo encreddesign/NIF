@@ -1,11 +1,12 @@
 package nif.encreddesign.processes;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by Joshua on 11/02/17.
  */
-public class ProcessObject {
+public class ProcessObject implements Serializable {
 
     // properties
     private String pName;
@@ -16,6 +17,8 @@ public class ProcessObject {
 
     private String pCarry;
 
+    private String pId;
+
     /*
     * @method constructor
     * */
@@ -25,6 +28,7 @@ public class ProcessObject {
         this.pDescription = null;
         this.pTask = null;
         this.pCarry = null;
+        this.pId = null;
 
     }
 
@@ -101,6 +105,24 @@ public class ProcessObject {
     }
 
     /*
+    * @method setId
+    * */
+    public void setId ( String id ) {
+
+        this.pId = id;
+
+    }
+
+    /*
+    * @method getId
+    * */
+    public String getId () {
+
+        return this.pId;
+
+    }
+
+    /*
     * @method setProcessData
     * */
     public void setProcessData ( HashMap<String, String> data ) {
@@ -109,15 +131,7 @@ public class ProcessObject {
         if( data.get("description") != null ) this.pDescription = data.get("description");
         if( data.get("task") != null ) this.pTask = data.get("task");
         if( data.get("carry") != null ) this.pCarry = data.get("carry");
-
-    }
-
-    /*
-    * @method getProcessObject
-    * */
-    public ProcessObject getProcessObject () {
-
-        return this;
+        if( data.get("id") != null ) this.pId = data.get("id");
 
     }
 

@@ -1,10 +1,14 @@
 package nif.encreddesign.processes;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 
 import nif.encreddesign.nif.encreddesign.service.NIFServiceManager;
 import nif.encreddesign.utils.Json;
+import nif.encreddesign.utils.Utils;
 
 /**
  * Created by Joshua on 11/02/17.
@@ -32,18 +36,43 @@ public class Process {
     * */
     public void addAllProcesses () {
 
-        this.getJsonHashMap();
+        this.buildProcessObjects();
+
+        Log.d(Utils.LOG_TAG, this.pObjectArray.toString());
 
     }
 
     /*
-    * @method getJsonHashMap
+    * @method buildProcessObjects
     * */
-    protected HashMap<String, String> getJsonHashMap () {
+    protected void buildProcessObjects () {
 
-        Json.getAsArray( this.jsonString );
+        final ArrayList<HashMap<String, String>> mapped = Json.getAsArray( this.jsonString );
 
-        return null;
+        try {
+
+            if( mapped.size() <= 0 ) throw new EmptyStackException();
+            for(HashMap<String, String> map : mapped){
+
+                ProcessObject pObject = new ProcessObject();
+                pObject.setProcessData( map );
+
+                this.pObjectArray.add( pObject );
+
+            }
+
+        } catch (EmptyStackException ex) {
+            Log.e( Utils.LOG_TAG, "Empty process objects", ex );
+        }
+
+    }
+
+    /*
+    * @method getProcessObjects
+    * */
+    public ArrayList<ProcessObject> getProcessObjects () {
+
+        return this.pObjectArray;
 
     }
 
