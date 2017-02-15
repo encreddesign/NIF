@@ -15,9 +15,9 @@ public class Utils {
     public static final String TASK_TYPE = "taskType";
 
     public static final String PACKAGE_COM = "nif.encreddesign.com";
-    public static final String PACKAGE_AJAX = "nif.encreddesign.ajax";
     public static final String PACKAGE_SERVICE = "nif.encreddesign.service";
     public static final String PACKAGE_TASKS = "nif.encreddesign.tasks";
+    public static final String PACKAGE_TASKS_CARRY = "nif.encreddesign.tasks.carry";
 
     /*
     * @method getClassByName
