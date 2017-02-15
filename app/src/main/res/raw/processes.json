@@ -10,7 +10,7 @@
         "name":"Wifi Home",
         "description":"Checks if you connect to your home wifi, if so it will connect to a bluetooth device of your choice",
         "task":"TaskNetwork",
-        "carry":"CarrySMS",
+        "carry":"CarryBluetooth",
         "id":"717ca6f6-8c18-4df9-9517-adfbea83e73c"
     }
 ]
