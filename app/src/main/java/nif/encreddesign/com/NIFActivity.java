@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import nif.encreddesign.nif.encreddesign.service.NIFServiceManager;
-import nif.encreddesign.processes.Process;
+import nif.encreddesign.processes.ProcessCore;
 
 public class NIFActivity extends Activity {
 
-    protected Process process;
+    protected ProcessCore core;
     protected NIFServiceManager nServiceManager;
 
     @Override
@@ -17,12 +17,12 @@ public class NIFActivity extends Activity {
 
         this.nServiceManager = new NIFServiceManager(this, NIFService.class);
 
-        process = new Process( "[{\"name\":\"Wifi\"},{\"name\":\"Bluetooth\"}]", this.nServiceManager );
-        process.addAllProcesses();
+        this.core = new ProcessCore( this.getResources(), 0, this.nServiceManager );
+        this.core.startCore();
 
         // handle adding tasks from UI
-        this.nServiceManager.addSpecTask( "TaskAjax" );
-        this.nServiceManager.addSpecTask( "TaskSMS" );
+        //this.nServiceManager.addSpecTask( "TaskAjax" );
+        //this.nServiceManager.addSpecTask( "TaskSMS" );
         //this.nServiceManager.start();
 
     }
