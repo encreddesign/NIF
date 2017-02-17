@@ -8,14 +8,16 @@ import nif.encreddesign.utils.Uid;
  */
 public class ScheduledCallback implements Runnable {
 
+    protected String pId;
     protected ICarry iCarry;
     protected ScheduleListener sListener;
 
     /*
     * @method constructor - AjaxUpdate
     * */
-    public ScheduledCallback ( ScheduleListener sListener, ICarry iCarry ) {
+    public ScheduledCallback ( ScheduleListener sListener, ICarry iCarry, String uId ) {
 
+        this.pId = uId;
         this.sListener = sListener;
         this.iCarry = iCarry;
 
@@ -24,13 +26,8 @@ public class ScheduledCallback implements Runnable {
     @Override
     public void run() {
 
-        // Generate unique id for this schedule
-        final String uId = Uid.gen();
-        // Ajaxy stuff goes here
-        final String tData = ( "Recycled at: " + System.currentTimeMillis() );
-
         // trigger the update
-        this.sListener.scheduledUpdate(tData, uId);
+        this.sListener.scheduledUpdate(this.pId, this.iCarry);
 
     }
 

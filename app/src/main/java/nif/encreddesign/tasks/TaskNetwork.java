@@ -3,6 +3,7 @@ package nif.encreddesign.tasks;
 import android.util.Log;
 
 import nif.encreddesign.nif.encreddesign.service.ScheduleListener;
+import nif.encreddesign.tasks.carry.ICarry;
 import nif.encreddesign.utils.Utils;
 
 /**
@@ -10,17 +11,23 @@ import nif.encreddesign.utils.Utils;
  */
 public class TaskNetwork implements ScheduleListener {
 
+    private String cTaskName = null;
+
     /*
     * @method constructor - AjaxUpdate
     * */
-    public TaskNetwork () {}
+    public TaskNetwork () {
+
+        this.cTaskName = this.getClass().getName();
+
+    }
 
     @Override
-    public void scheduledUpdate( String sData, String sUid ) {
+    public void scheduledUpdate( String sUid, ICarry carry ) {
 
         // update has been called, do needed with data
 
-        Log.d(Utils.LOG_TAG, (sUid + ": " + sData));
+        Log.d(Utils.LOG_TAG, sUid);
 
     }
 

@@ -14,6 +14,7 @@ public class TaskTypes {
 
     // list of tasks
     private ArrayList<ICarry> carryList;
+    private ArrayList<String> processIds;
     private ArrayList<ScheduleListener> localList;
 
     /*
@@ -21,6 +22,8 @@ public class TaskTypes {
     * */
     public TaskTypes () {
 
+        this.carryList = new ArrayList<ICarry>();
+        this.processIds = new ArrayList<String>();
         this.localList = new ArrayList<ScheduleListener>();
 
     }
@@ -49,20 +52,20 @@ public class TaskTypes {
     }
 
     /*
+    * @method addProcId
+    * */
+    public void addProcId ( final String uid ) {
+
+        this.processIds.add( uid );
+
+    }
+
+    /*
     * @method getTaskSize
     * */
     public int getTaskSize () {
 
         return this.localList.size();
-
-    }
-
-    /*
-    * @method getCarryType
-    * */
-    public int getCarryType () {
-
-        return this.carryList.size();
 
     }
 
@@ -81,6 +84,15 @@ public class TaskTypes {
     public ArrayList<ICarry> getCarryTypes () {
 
         return this.carryList;
+
+    }
+
+    /*
+    * @method getCarryTypes
+    * */
+    public ArrayList<String> getProcIds () {
+
+        return this.processIds;
 
     }
 

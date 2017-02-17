@@ -38,7 +38,16 @@ public class Process {
 
         this.buildProcessObjects();
 
-        Log.d(Utils.LOG_TAG, this.pObjectArray.toString());
+        if( this.pObjectArray.size() > 0 ) {
+
+            for(ProcessObject process : this.pObjectArray) {
+
+                final String TaskAndCarry = ( process.getTask() + ":" + process.getCarry() + ":" + process.getId() );
+                this.pNIFServiceManager.addSpecTask( TaskAndCarry );
+
+            }
+
+        }
 
     }
 

@@ -56,12 +56,14 @@ public class NIFService extends Service {
 
                     String taskT = task.split(":")[0];
                     String carryT = task.split(":")[1];
+                    String processId = task.split(":")[2];
 
                     final ScheduleListener listener = (ScheduleListener) Utils.getClassByName(taskT, Utils.PACKAGE_TASKS);
                     final ICarry carry = (ICarry) Utils.getClassByName(carryT, Utils.PACKAGE_TASKS_CARRY);
 
                     this.tTypes.addTaskType( listener, this.tRegistered );
                     this.tTypes.addCarryType( carry );
+                    this.tTypes.addProcId( processId );
 
                 }
 
@@ -78,7 +80,7 @@ public class NIFService extends Service {
             try {
 
                 // Start the schedule service
-                this.nExecutorService.runSchedule( this.tTypes.getTaskTypes(), this.tTypes.getCarryTypes() );
+                this.nExecutorService.runSchedule( this.tTypes.getTaskTypes(), this.tTypes.getCarryTypes(), this.tTypes.getProcIds() );
 
             } catch (EmptyStackException ex) {
                 Log.e( Utils.LOG_TAG, ex.getMessage(), ex );

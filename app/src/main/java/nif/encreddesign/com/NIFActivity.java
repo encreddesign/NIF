@@ -17,13 +17,8 @@ public class NIFActivity extends Activity {
 
         this.nServiceManager = new NIFServiceManager(this, NIFService.class);
 
-        this.core = new ProcessCore( this.getResources(), 0, this.nServiceManager );
+        this.core = new ProcessCore( this.getResources(), R.raw.processes, this.nServiceManager );
         this.core.startCore();
-
-        // handle adding tasks from UI
-        //this.nServiceManager.addSpecTask( "TaskAjax" );
-        //this.nServiceManager.addSpecTask( "TaskSMS" );
-        //this.nServiceManager.start();
 
     }
 

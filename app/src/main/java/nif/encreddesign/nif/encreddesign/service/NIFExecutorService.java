@@ -42,13 +42,13 @@ public class NIFExecutorService {
     /*
     * @method runSchedule
     * */
-    public void runSchedule ( final ArrayList<ScheduleListener> sListener, final ArrayList<ICarry> iCarry ) {
+    public void runSchedule ( final ArrayList<ScheduleListener> sListener, final ArrayList<ICarry> iCarry, final ArrayList<String> uIds ) {
 
         if( sListener.size() > 0 ) {
 
             for(int i = 0; i < sListener.size(); i++) {
 
-                this.sCallback = new ScheduledCallback( sListener.get(i), iCarry.get(i) );
+                this.sCallback = new ScheduledCallback( sListener.get(i), iCarry.get(i), uIds.get(i) );
                 try {
 
                     this.eSchedule.scheduleAtFixedRate( this.sCallback, eThreadRecycleTime, eThreadRecycleTime, TimeUnit.SECONDS );
